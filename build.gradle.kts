@@ -68,10 +68,13 @@ dependencies {
      * due to the micronaut application plugin adding them by default.
      */
     annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+
     kapt("io.micronaut:micronaut-http-validation")
     kapt("io.micronaut.openapi:micronaut-openapi")
     kapt("io.micronaut.security:micronaut-security")
 
+    implementation("io.micronaut.serde:micronaut-serde-jackson")
     implementation("io.micronaut:micronaut-runtime")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
     implementation("io.micronaut:micronaut-inject")
