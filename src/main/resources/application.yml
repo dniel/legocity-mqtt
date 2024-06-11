@@ -21,7 +21,6 @@ micronaut:
 # To enable MQTT, set environment variable MQTT_ENABLED=true
 mqtt:
   client:
-    server-uri: tcp://localhost:1883
     client-id: legocity-server
     automatic-reconnect: true
     max-reconnect-delay: 30000
