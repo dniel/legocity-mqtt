@@ -15,6 +15,5 @@ exec su-exec "$USER:$GROUP" "$JAVA_HOME/bin/java" \
 
 exec su-exec "$USER:$GROUP" "$JAVA_HOME/bin/java" \
   -XX:MaxRAMPercentage=80 \
-  -Dlogback.configurationFile=logback-cloud.xml \
   -Djava.util.concurrent.ForkJoinPool.common.parallelism=4 \
   -jar "$APP_JAR"
