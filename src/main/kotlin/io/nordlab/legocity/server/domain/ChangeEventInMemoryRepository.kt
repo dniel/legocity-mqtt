@@ -1,7 +1,6 @@
 package io.nordlab.legocity.server.domain
 
 import io.micronaut.context.annotation.Primary
-import io.micronaut.context.event.ApplicationEventPublisher
 import io.nordlab.legocity.server.services.RandomStringService
 import io.nordlab.legocity.server.services.RandomStringServiceException
 import kotlinx.coroutines.flow.Flow
@@ -27,8 +26,7 @@ private val logger = KotlinLogging.logger {}
 @Named("in-memory")
 @Primary
 open class ChangeEventInMemoryRepository(
-    private val randomStringService: RandomStringService,
-    private val eventPublisher: ApplicationEventPublisher<ChangeEvent>
+    private val randomStringService: RandomStringService
 ) : ChangeEventRepository {
 
     /* Used as a version count to number the generated updates */
@@ -69,7 +67,7 @@ open class ChangeEventInMemoryRepository(
 
         logger.info { "Create new ChangeEvent $changeEvent" }
         buffer.add(changeEvent)
-        eventPublisher.publishEventAsync(changeEvent)
+
         return changeEvent
     }
 

@@ -1,7 +1,9 @@
 package io.nordlab.legocity.server.services
 
+import io.micronaut.context.event.ApplicationEventPublisher
 import io.nordlab.legocity.server.domain.ChangeEvent
 import io.nordlab.legocity.server.domain.ChangeEventRepository
+import io.nordlab.legocity.server.system.mqtt.MqttPublisher
 import mu.KotlinLogging
 import jakarta.inject.Named
 import jakarta.inject.Singleton
@@ -18,9 +20,23 @@ private val logger = KotlinLogging.logger {}
  */
 @Singleton
 @Named("create_event")
-class CreateEventServiceImpl(private val repo: ChangeEventRepository) : CreateEventService {
+class CreateEventServiceImpl(
+    private val repo: ChangeEventRepository,
+    private val eventPublisher: ApplicationEventPublisher<ChangeEvent>,
+    private val mqttPublisher: MqttPublisher
+) : CreateEventService {
 
-    override suspend fun createEvent() = repo.create()
+    override suspend fun createEvent(): ChangeEvent {
+        // create new event containing a random string
+        val event = repo.create()
+
+        // publish event to internal event bus
+        eventPublisher.publishEventAsync(event)
+
+        // publish event to mqtt
+        mqttPublisher.publishEvent(event)
+        return event
+    }
 }
 
 interface CreateEventService {

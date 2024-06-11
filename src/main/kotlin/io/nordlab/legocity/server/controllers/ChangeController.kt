@@ -29,8 +29,6 @@ import io.micronaut.security.rules.SecurityRule
 import io.nordlab.legocity.server.domain.ChangeEvent
 import io.nordlab.legocity.server.domain.ChangeEventRepository
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.extensions.Extension
-import io.swagger.v3.oas.annotations.extensions.ExtensionProperty
 import io.swagger.v3.oas.annotations.tags.Tag
 import io.swagger.v3.oas.annotations.tags.Tags
 import kotlinx.coroutines.async
@@ -87,30 +85,6 @@ class ChangeController(
     @Operation(
         summary = "Stream change events",
         description = "This endpoint will publish all received ChangeEvents from the events shared flow",
-        extensions = arrayOf(
-            Extension(
-                name = "x-amazon-apigateway-integration",
-                properties = [
-                    ExtensionProperty(name = "passthroughBehavior", value = "when_no_match"),
-                    ExtensionProperty(
-                        name = "uri",
-                        value = "https://slb.\${hosted_zone_name}/\${base_path}/changes",
-                    ),
-                    ExtensionProperty(name = "httpMethod", value = "GET"),
-                    ExtensionProperty(name = "type", value = "http_proxy"),
-                ],
-            ),
-            Extension(
-                name = "x-amazon-apigateway-request-validator",
-
-                properties = [
-                    ExtensionProperty(
-                        name = "x-amazon-apigateway-request-validator",
-                        value = "Validate body, query string parameters, and headers",
-                    ),
-                ],
-            ),
-        ),
     )
     @Get
     @Produces(MediaType.APPLICATION_JSON_STREAM)
@@ -133,30 +107,6 @@ class ChangeController(
     @Operation(
         summary = "Return all change events",
         description = "Return all change events",
-        extensions = arrayOf(
-            Extension(
-                name = "x-amazon-apigateway-integration",
-                properties = [
-                    ExtensionProperty(name = "passthroughBehavior", value = "when_no_match"),
-                    ExtensionProperty(
-                        name = "uri",
-                        value = "https://slb.\${hosted_zone_name}/\${base_path}/changes",
-                    ),
-                    ExtensionProperty(name = "httpMethod", value = "GET"),
-                    ExtensionProperty(name = "type", value = "http_proxy"),
-                ],
-            ),
-            Extension(
-                name = "x-amazon-apigateway-request-validator",
-
-                properties = [
-                    ExtensionProperty(
-                        name = "x-amazon-apigateway-request-validator",
-                        value = "Validate body, query string parameters, and headers",
-                    ),
-                ],
-            ),
-        ),
     )
     @Get
     @Produces(MediaType.APPLICATION_JSON)
@@ -180,30 +130,6 @@ class ChangeController(
     @Operation(
         summary = "Create and return a single change event",
         description = "Create and return a single change event",
-        extensions = arrayOf(
-            Extension(
-                name = "x-amazon-apigateway-integration",
-                properties = [
-                    ExtensionProperty(name = "passthroughBehavior", value = "when_no_match"),
-                    ExtensionProperty(
-                        name = "uri",
-                        value = "https://slb.\${hosted_zone_name}/\${base_path}/changes",
-                    ),
-                    ExtensionProperty(name = "httpMethod", value = "POST"),
-                    ExtensionProperty(name = "type", value = "http_proxy"),
-                ],
-            ),
-            Extension(
-                name = "x-amazon-apigateway-request-validator",
-
-                properties = [
-                    ExtensionProperty(
-                        name = "x-amazon-apigateway-request-validator",
-                        value = "Validate body, query string parameters, and headers",
-                    ),
-                ],
-            ),
-        ),
     )
     @Post
     @Produces(MediaType.APPLICATION_JSON)
