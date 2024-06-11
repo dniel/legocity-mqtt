@@ -26,7 +26,7 @@ RUN chmod 755 $HOME/*.sh
 
 COPY --chown=$USER build/docker/main/layers/libs $HOME/application/libs
 COPY --chown=$USER build/docker/main/layers/resources $HOME/application/resources
-COPY --chown=$USER build/docker/main/layers/application.jar $HOME/application/application.jar
+COPY --chown=$USER build/docker/main/layers/app $HOME/application
 
 # Download elastic cloud apm agent
 RUN wget https://repo1.maven.org/maven2/co/elastic/apm/elastic-apm-agent/$ELASTIC_APM_AGENT_VERSION/elastic-apm-agent-$ELASTIC_APM_AGENT_VERSION.jar -O $HOME/elastic-apm-agent.jar
