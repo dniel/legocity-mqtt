@@ -1,9 +1,7 @@
 FROM eclipse-temurin:21.0.1_12-jre-alpine
 ENV USER=appuser
 ENV GROUP=$USER \
-    HOME=/home/$USER \
-    CONTEXT_PATH=/legocity-server \
-    ELASTIC_APM_AGENT_VERSION=1.38.0
+    HOME=/home/$USER
 
 # set timezone to Oslo, because otherwise it is set
 # to the location of the datacenter running fargate.
