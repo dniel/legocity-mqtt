@@ -9,8 +9,8 @@ plugins {
     kotlin("kapt")
     kotlin("plugin.allopen")
 
-    id("io.micronaut.application") version "4.0.1"
-    id("io.micronaut.test-resources") version "4.0.1"
+    id("io.micronaut.application") version "4.4.0"
+    id("io.micronaut.test-resources") version "4.4.0"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
 }
 
@@ -46,6 +46,12 @@ kotlin {
         languageSettings {
             languageVersion = "2.0"
         }
+    }
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
 
