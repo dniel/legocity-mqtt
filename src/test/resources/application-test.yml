@@ -2,6 +2,9 @@
 micronaut.security.token.jwt.signatures.secret.generator.secret: pleaseChangeThisSecretForANewOne
 micronaut.security.token.jwt.claims-validators.audience: requiredAudience
 
+# enable mqtt for tests.
+mqtt.enabled: true
+
 # Test-Resources is a Micronaut feature that allows you to start
 # containers before running tests. This is useful for integration tests
 # that require external services like databases, message brokers, etc.

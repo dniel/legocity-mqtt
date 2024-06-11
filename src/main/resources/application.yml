@@ -20,6 +20,7 @@ micronaut:
 # Basic configuration for the MQTT, by default MQTT is disabled.
 # To enable MQTT, set environment variable MQTT_ENABLED=true
 mqtt:
+  enabled: false
   client:
     client-id: legocity-server
     automatic-reconnect: true
