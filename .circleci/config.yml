@@ -1,0 +1,82 @@
+version: 2.1
+parameters:
+  ecr_repo_name:
+    type: string
+    default: "trafficinfo-baseline-micronaut"
+
+  application_name:
+    type: string
+    default: "trafficinfo-baseline-micronaut"
+
+orbs:
+  aws-ecr: circleci/aws-ecr@8.2.1
+  deployment: vydev/deployment@0.3.7
+  gradle: circleci/gradle@3.0.0
+  terraform: circleci/terraform@3.2.1
+  documentation: vydev/service-documentation@0.4.2
+
+jobs:
+  build-and-push-image:
+    executor: aws-ecr/default
+    steps:
+      - checkout
+      - aws-ecr/build-and-push-image:
+          attach-workspace: true
+          repo: << pipeline.parameters.ecr_repo_name >>
+          dockerfile: "Docker/Dockerfile"
+          tag: "latest,${CIRCLE_BRANCH}-branch,${CIRCLE_SHA1:0:7}-SHA1"
+
+executors:
+  ubuntu:
+    working_directory: ~/tmp_checkout
+    machine:
+      image: ubuntu-2204:2023.04.2
+
+workflows:
+  do:
+    jobs:
+      - gradle/test:
+          name: "Build and test"
+          executor: ubuntu
+          context:
+            - ruteplan
+            - nexus
+          deps_checksum_file: build.gradle.kts
+          test_command: "clean test build --no-daemon"
+          post-steps:
+            - run:
+                command: ./gradlew -q javaToolchains
+                when: on_fail
+            - run: ls -laR build/docker
+            - persist_to_workspace:
+                root: .
+                paths:
+                  - "build/*"
+
+      - build-and-push-image:
+          context: ruteplan
+          requires:
+            - "Build and test"
+
+      - documentation/push-api-config-and-spec:
+          name: "Publish openapi spec"
+          context:
+            - ruteplan
+          service-name: baseline-micronaut
+          openapi-path: terraform/openapi/baseline.yml
+          requires:
+            - build-and-push-image
+          filters:
+            branches:
+              only: master
+
+# TODO waiting for infrastructure team to implement repo override for trigger-deployment in orb.
+#      - deployment/trigger-deployment:
+#          context:
+#            - ruteplan
+#          requires:
+#            - build-and-push-image
+# STOPSHIP set branch filter to master before merge
+#          filters:
+#            branches:
+#              only: [ master ]
