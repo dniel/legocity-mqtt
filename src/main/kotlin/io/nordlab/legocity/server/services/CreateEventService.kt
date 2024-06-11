@@ -1,5 +1,6 @@
 package io.nordlab.legocity.server.services
 
+import io.micronaut.context.annotation.Value
 import io.micronaut.context.event.ApplicationEventPublisher
 import io.nordlab.legocity.server.domain.ChangeEvent
 import io.nordlab.legocity.server.domain.ChangeEventRepository
@@ -21,9 +22,12 @@ private val logger = KotlinLogging.logger {}
 @Singleton
 @Named("create_event")
 class CreateEventServiceImpl(
-    private val repo: ChangeEventRepository,
-    private val eventPublisher: ApplicationEventPublisher<ChangeEvent>,
-    private val mqttPublisher: MqttPublisher
+    val repo: ChangeEventRepository,
+    val eventPublisher: ApplicationEventPublisher<ChangeEvent>,
+    val mqttPublisher: MqttPublisher,
+
+    @Value("\${mqtt.enabled:false}")
+    val mqttEnabled: Boolean
 ) : CreateEventService {
 
     override suspend fun createEvent(): ChangeEvent {
@@ -33,8 +37,13 @@ class CreateEventServiceImpl(
         // publish event to internal event bus
         eventPublisher.publishEventAsync(event)
 
-        // publish event to mqtt
-        mqttPublisher.publishEvent(event)
+        // publish event to mqtt broker if enabled
+        if (mqttEnabled) {
+            mqttPublisher.publishEvent(event)
+        } else {
+            logger.warn { "MQTT is disabled. Not publishing event." }
+        }
+
         return event
     }
 }
