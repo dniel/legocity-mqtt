@@ -71,34 +71,18 @@ dependencies {
     kapt("io.micronaut:micronaut-http-validation")
     kapt("io.micronaut.openapi:micronaut-openapi")
     kapt("io.micronaut.security:micronaut-security")
-    kapt("io.micronaut.micrometer:micronaut-micrometer-annotation")
 
     implementation("io.micronaut:micronaut-runtime")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
-
     implementation("io.micronaut:micronaut-inject")
     implementation("io.micronaut.validation:micronaut-validation")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-management")
     implementation("io.micronaut.discovery:micronaut-discovery-client")
-    implementation("io.micronaut.micrometer:micronaut-micrometer-core")
-    implementation("io.micronaut.micrometer:micronaut-micrometer-registry-cloudwatch")
     implementation("io.micronaut.reactor:micronaut-reactor")
     implementation("io.micronaut.reactor:micronaut-reactor-http-client")
-
     implementation("io.micronaut.security:micronaut-security")
     implementation("io.micronaut.security:micronaut-security-jwt")
-
-    implementation("io.micronaut.jms:micronaut-jms-sqs")
-
-    // AWS service dependencies
-    implementation("io.micronaut.aws:micronaut-aws-sdk-v2")
-    implementation("io.micronaut.aws:micronaut-aws-parameter-store")
-    implementation("software.amazon.awssdk:dynamodb")
-    implementation("software.amazon.awssdk:sqs")
-    implementation("software.amazon.awssdk:sns")
-
-    implementation("io.micronaut.cache:micronaut-cache-caffeine")
     implementation("io.micronaut.problem:micronaut-problem-json")
 
     /**
@@ -113,7 +97,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
 
-    // https://mvnrepository.com/artifact/org.yaml/snakeyaml
     implementation("org.yaml:snakeyaml:2.0")
 
     /**
@@ -132,6 +115,12 @@ dependencies {
     testImplementation("org.assertj:assertj-core")
     testImplementation("io.micronaut.test:micronaut-test-kotest5")
     testImplementation("io.kotest:kotest-runner-junit5-jvm")
+
+    // AWS service dependencies
+    testImplementation("software.amazon.awssdk:dynamodb")
+    testImplementation("software.amazon.awssdk:sqs")
+    testImplementation("software.amazon.awssdk:sns")
+    testImplementation("io.micronaut.jms:micronaut-jms-sqs")
 }
 
 application {
