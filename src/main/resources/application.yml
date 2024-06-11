@@ -17,16 +17,6 @@ micronaut:
   security:
     enabled: false
 
-# Basic configuration for the MQTT, by default MQTT is disabled.
-# To enable MQTT, set environment variable MQTT_ENABLED=true
-mqtt:
-  enabled: false
-  client:
-    server-uri: tcp://localhost:1883
-    client-id: legocity-server
-    automatic-reconnect: true
-    max-reconnect-delay: 30000
-
 endpoints:
   health:
     enabled: true
