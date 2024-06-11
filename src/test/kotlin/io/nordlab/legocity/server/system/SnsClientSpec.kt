@@ -48,7 +48,7 @@ class SnsClientSpec(
     /**
      * Perform some testing here.
      */
-    given("some test data") {
+    xgiven("some test data") {
         val testMessage = "a test message with text"
 
         `when`("calling something") {

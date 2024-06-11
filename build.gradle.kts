@@ -11,9 +11,6 @@ plugins {
 
     id("io.micronaut.application") version "4.0.1"
     id("io.micronaut.test-resources") version "4.0.1"
-
-    id("jacoco")
-    id("org.sonarqube") version "4.3.0.3225"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
 }
 
@@ -45,11 +42,6 @@ micronaut {
 }
 
 kotlin {
-    // Build with Java 20 to avoid this issue:
-    // https://youtrack.jetbrains.com/issue/KT-60507/Kapt-IllegalAccessError-superclass-access-check-failed-using-java-21-toolchain
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(20))
-    }
     sourceSets.all {
         languageSettings {
             languageVersion = "2.0"
@@ -128,7 +120,7 @@ dependencies {
      * Test dependency configurations.
      */
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
-    testImplementation("com.github.tomakehurst:wiremock-jre8:2.35.1")
+    testImplementation("org.wiremock:wiremock:3.6.0")
     testImplementation("io.mockk:mockk")
     testImplementation("io.micronaut:micronaut-inject-java")
     testImplementation("org.assertj:assertj-core")
@@ -138,10 +130,6 @@ dependencies {
 
 application {
     mainClass.set("io.nordlab.legocity.server.Application")
-}
-
-jacoco {
-    toolVersion = "0.8.11"
 }
 
 tasks {
@@ -163,14 +151,6 @@ tasks {
         baseImage("gcr.io/distroless/cc-debian11")
     }
 
-    jacocoTestReport {
-        reports {
-            xml.required.set(true)
-            html.required.set(false)
-            csv.required.set(false)
-        }
-    }
-
     test {
         useJUnitPlatform()
         systemProperty("micronaut.environments", "test")
@@ -190,7 +170,7 @@ tasks {
 
     kotlin {
         compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_20)
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
         }
     }
 }
