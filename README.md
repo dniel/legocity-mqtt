@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/nsbno/trafficinfo-baseline-micronaut.svg?style=svg&circle-token=67eb02d828d5a7e61e775f7840c387cc5be36dca)](https://circleci.com/gh/nsbno/trafficinfo-baseline-micronaut)
+[![CircleCI](https://circleci.com/gh/nsbno/trafficinfo-legocity-server.svg?style=svg&circle-token=67eb02d828d5a7e61e775f7840c387cc5be36dca)](https://circleci.com/gh/nsbno/trafficinfo-legocity-server)
 
 # Microservice baseline - based on Micronaut with Kotlin
 This project serves as a baseline when you wish to create a new microservice. 

@@ -1,4 +1,4 @@
-rootProject.name = "trafficinfo-baseline-micronaut"
+rootProject.name = "trafficinfo-legocity-server"
 
 pluginManagement {
     val kotlinVersion: String by settings

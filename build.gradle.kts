@@ -17,7 +17,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
 }
 
-group = "no.vy.trafficinfo.baseline.micronaut"
+group = "io.nordlab.legocity.server"
 
 val version: String by project
 
@@ -31,13 +31,6 @@ fun getProperty(name: String) = if (project.properties[name] != null) {
 }
 
 repositories {
-    maven {
-        url = uri("https://nexus.common-services.vydev.io/repository/maven-public")
-        credentials {
-            username = getProperty("NEXUS_USERNAME")
-            password = getProperty("NEXUS_PASSWORD")
-        }
-    }
     mavenCentral()
 }
 
@@ -47,7 +40,7 @@ micronaut {
     testRuntime("kotest5")
     processing {
         incremental(true)
-        annotations("no.vy.trafficinfo.*")
+        annotations("io.nordlab.legocity.*")
     }
 }
 
@@ -111,11 +104,6 @@ dependencies {
     implementation("io.micronaut.problem:micronaut-problem-json")
 
     /**
-     * Trafficinfo Common Dependencies.
-     */
-    implementation("no.vy.trafficinfo.common:logging:0.0.3")
-
-    /**
      * Third-party dependencies.
      */
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
@@ -135,11 +123,6 @@ dependencies {
      * To enable this propagation you need to include following dependency
      */
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.7.1")
-    /**
-     * Tracing
-     */
-    implementation("co.elastic.apm:apm-agent-api:1.38.0")
-    implementation("co.elastic.apm:apm-opentracing:1.38.0")
 
     /**
      * Test dependency configurations.
@@ -154,7 +137,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("no.vy.trafficinfo.baseline.micronaut.Application")
+    mainClass.set("io.nordlab.legocity.server.Application")
 }
 
 jacoco {

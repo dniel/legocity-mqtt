@@ -6,8 +6,8 @@
         </encoder>
     </appender>
 
-    <logger name="no.vy" level="DEBUG" />
-    <logger name="io.micronaut.security" level="DEBUG" />
+    <logger name="io.nordlab" level="DEBUG" />
+    <logger name="io.micronaut" level="INFO" />
 
     <root level="warn">
         <appender-ref ref="STDOUT" />

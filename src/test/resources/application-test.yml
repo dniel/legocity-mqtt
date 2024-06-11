@@ -3,14 +3,6 @@ micronaut.security.token.jwt.signatures.secret.generator.secret: pleaseChangeThi
 micronaut.security.token.jwt.claims-validators.audience: requiredAudience
 
 micronaut:
-  http:
-    services:
-      whoami:
-        url: https://services.dev.trafficinfo.vydev.io
-        path: /whoami
-      baseline:
-        url: http://localhost:8080
-
   jms:
     sqs:
       enabled: true
