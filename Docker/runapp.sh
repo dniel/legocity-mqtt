@@ -2,7 +2,7 @@
 set -e
 
 # The module to start.
-APP_JAR="application/application.jar"
+APP_JAR="/application/application.jar"
 
 echo " --- RUNNING $(basename "$0") $(date -u "+%Y-%m-%d %H:%M:%S Z") --- "
 set -x
