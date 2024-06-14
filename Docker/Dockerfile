@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM ubuntu:rolling
 ENV USER=appuser
 ENV GROUP=$USER \
     HOME=/home/$USER
@@ -13,8 +13,6 @@ RUN apk add --no-cache su-exec && \
     addgroup -S $GROUP && \
     adduser -S $USER -G $GROUP && \
     chown -R $USER $HOME
-
-RUN apk add openjdk21-jre
 
 WORKDIR $HOME
 
