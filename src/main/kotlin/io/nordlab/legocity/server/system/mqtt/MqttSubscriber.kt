@@ -10,7 +10,10 @@ private val logger = KotlinLogging.logger {}
 class MqttSubscriber {
     var event: String? = null
 
-    @Topic("legocity/#")
+    /**
+     * Listen for all messages on the MQTT broker.
+     */
+    @Topic("#")
     fun receive(data: String) {
         logger.info { "Received message: $data" }
         event = data
