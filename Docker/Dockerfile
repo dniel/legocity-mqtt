@@ -1,18 +1,29 @@
-FROM gcr.io/distroless/java
+FROM alpine:latest
 ENV USER=appuser
 ENV GROUP=$USER \
     HOME=/home/$USER
+
+# set timezone to Oslo, because otherwise it is set
+# to the location of the datacenter running fargate.
+ENV TZ=Europe/Oslo
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# create app user.
+RUN apk add --no-cache su-exec && \
+    addgroup -S $GROUP && \
+    adduser -S $USER -G $GROUP && \
+    chown -R $USER $HOME
 
 WORKDIR $HOME
 
 EXPOSE 8080
 
 # copy application files
-COPY  Docker/runapp.sh $HOME/
+COPY --chown=$USER Docker/runapp.sh $HOME/
 RUN chmod 755 $HOME/*.sh
 
-COPY build/docker/main/layers/libs $HOME/application/libs
-COPY build/docker/main/layers/resources $HOME/application/resources
-COPY build/docker/main/layers/app $HOME/application
+COPY --chown=$USER build/docker/main/layers/libs $HOME/application/libs
+COPY --chown=$USER build/docker/main/layers/resources $HOME/application/resources
+COPY --chown=$USER build/docker/main/layers/app $HOME/application
 
 CMD [ "./runapp.sh" ]
