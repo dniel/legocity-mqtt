@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM ubuntu:rolling
 ENV USER=appuser
 ENV GROUP=$USER \
     HOME=/home/$USER
