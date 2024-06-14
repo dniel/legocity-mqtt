@@ -47,11 +47,12 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: .
           file: Docker/Dockerfile
           push: true
+          platform: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v8
           tags: |
             dniel/${{ steps.vars.outputs.application }}:latest
             dniel/${{ steps.vars.outputs.application }}:${{ steps.vars.outputs.branch }}
