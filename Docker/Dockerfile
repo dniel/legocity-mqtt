@@ -14,6 +14,8 @@ RUN apk add --no-cache su-exec && \
     adduser -S $USER -G $GROUP && \
     chown -R $USER $HOME
 
+RUN apk add openjdk21-jre
+
 WORKDIR $HOME
 
 EXPOSE 8080
