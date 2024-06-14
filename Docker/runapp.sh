@@ -8,12 +8,9 @@ echo " --- RUNNING $(basename "$0") $(date -u "+%Y-%m-%d %H:%M:%S Z") --- "
 set -x
 
 # Print some debug info about the JVM and Heap
-exec su-exec "$USER:$GROUP" "/usr/bin/java" \
-  -XX:MaxRAMPercentage=80 \
+exec "/usr/bin/java" \
   -XX:+PrintFlagsFinal \
   -version | grep Heap
 
-exec su-exec "$USER:$GROUP" "/usr/bin/java" \
-  -XX:MaxRAMPercentage=80 \
-  -Djava.util.concurrent.ForkJoinPool.common.parallelism=4 \
+exec "/usr/bin/java" \
   -jar "$APP_JAR"

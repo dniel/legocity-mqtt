@@ -1,7 +1,7 @@
-FROM alpine:latest
-ENV USER=appuser
-ENV GROUP=$USER \
-    HOME=/home/$USER
+FROM azul/zulu-openjdk:21-jre-headless
+#ENV USER=appuser
+#ENV GROUP=$USER \
+#    HOME=/home/$USER
 
 # set timezone to Oslo, because otherwise it is set
 # to the location of the datacenter running fargate.
@@ -9,23 +9,22 @@ ENV TZ=Europe/Oslo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # create app user.
-RUN apk add --no-cache su-exec && \
-    addgroup -S $GROUP && \
-    adduser -S $USER -G $GROUP && \
-    chown -R $USER $HOME
+#RUN addgroup $GROUP
+#RUN adduser $USER --group $GROUP
+#RUN chown -R $USER $HOME
 
-RUN apk add openjdk21-jre
+#RUN apk add openjdk21-jre
 
 WORKDIR $HOME
 
 EXPOSE 8080
 
 # copy application files
-COPY --chown=$USER Docker/runapp.sh $HOME/
+COPY Docker/runapp.sh $HOME/
 RUN chmod 755 $HOME/*.sh
 
-COPY --chown=$USER build/docker/main/layers/libs $HOME/application/libs
-COPY --chown=$USER build/docker/main/layers/resources $HOME/application/resources
-COPY --chown=$USER build/docker/main/layers/app $HOME/application
+COPY build/docker/main/layers/libs $HOME/application/libs
+COPY build/docker/main/layers/resources $HOME/application/resources
+COPY build/docker/main/layers/app $HOME/application
 
 CMD [ "./runapp.sh" ]
