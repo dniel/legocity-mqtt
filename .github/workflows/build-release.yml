@@ -52,7 +52,7 @@ jobs:
           context: .
           file: Docker/Dockerfile
           push: true
-          platforms: linux/amd64,linux/arm64,linux/arm/v8
+          platforms: linux/amd64,linux/arm/v8
           tags: |
             dniel/${{ steps.vars.outputs.application }}:latest
             dniel/${{ steps.vars.outputs.application }}:${{ steps.vars.outputs.branch }}
