@@ -7,6 +7,6 @@ import io.nordlab.legocity.server.domain.ChangeEvent
 @MqttPublisher
 interface MqttPublisher {
 
-    @Topic("legocity/changeevent")
+    @Topic("legocity/server/randomstring")
     fun publishEvent(message: ChangeEvent)
 }
